@@ -24,14 +24,15 @@ matrix:
             - libxkbcommon-dev
       script: ./travis.sh
       before_deploy:
-      # Set up git user name and tag this commit
       - git tag latest -f
       deploy:
         provider: releases
-        api_key: "$GH_TOKEN"
+        api_key:
+          secure: "$GH_TOKEN"
         overwrite: true
         file: "shards.cfg"
         skip_cleanup: true
+        edge: true
         on:
           tags: false
           all_branches: true
