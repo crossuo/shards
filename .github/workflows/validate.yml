@@ -1,0 +1,31 @@
+name: CI
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Check shards
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y ninja-build xorg-dev libglu1-mesa-dev libalut-dev mesa-common-dev libasound-dev
+        pwd
+        ls -la
+        git clone https://github.com/crossuo/crossuo --depth 1
+        cmake -B build -S crossuo
+        cmake --build build --target shardchk
+        ./build/tools/xuoi/shardchk --path shards
+        git tag -f latest
+        git push origin --tags -f
+        git checkout latest
+        ls -la
+    - name: Release
+      uses: softprops/action-gh-release@v1
+      with:
+        files: ./shards.cfg
+        tag_name: latest
+      env:
+        DRAFT_RELEASE: "false"
+        PRE_RELEASE: "true"
+        ALLOW_EMPTY_CHANGELOG: "true"
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
