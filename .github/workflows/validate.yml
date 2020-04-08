@@ -9,6 +9,7 @@ jobs:
       run: |
         sudo apt-get update
         sudo apt-get install -y ninja-build xorg-dev libglu1-mesa-dev libalut-dev mesa-common-dev libasound-dev
+        sudo apt-get install -y ninja-build xorg-dev libglu1-mesa-dev libalut-dev mesa-common-dev libasound-dev --fix-missing
         pwd
         ls -la
         git clone https://github.com/crossuo/crossuo --depth 1
@@ -23,9 +24,9 @@ jobs:
       uses: softprops/action-gh-release@v1
       with:
         files: ./shards.cfg
-        tag_name: latest
+        tag_name: latest-1
       env:
-        DRAFT_RELEASE: "false"
+        DRAFT_RELEASE: "true"
         PRE_RELEASE: "true"
         ALLOW_EMPTY_CHANGELOG: "true"
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
