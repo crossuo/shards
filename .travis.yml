@@ -23,3 +23,10 @@ matrix:
             - libsndio-dev
             - libxkbcommon-dev
       script: ./travis.sh
+      install:
+        - |
+          CMAKE_URL="https://cmake.org/files/v3.13/cmake-3.13.5-Linux-x86_64.tar.gz"
+          mkdir cmake && travis_retry wget --no-check-certificate --quiet -O - ${CMAKE_URL} | tar --strip-components=1 -xz -C cmake
+          export PATH=${PWD}/cmake/bin:${PATH}
+        - cmake --version
+
