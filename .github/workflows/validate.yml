@@ -3,6 +3,8 @@ on: [push]
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      ACTIONS_RUNNER_DEBUG: true
     steps:
     - uses: actions/checkout@v2
     - name: Check shards
@@ -13,20 +15,18 @@ jobs:
         pwd
         ls -la
         git clone https://github.com/crossuo/crossuo --depth 1
+        git fetch
+        git checkout release
+        git config advice.addIgnoredFile true
         cmake -B build -S crossuo
         cmake --build build --target shardchk
         ./build/tools/xuoi/shardchk --path shards
-        git tag -f latest
-        git push origin --tags -f
-        git checkout latest
-        ls -la
-    - name: Release
-      uses: softprops/action-gh-release@v1
+    - uses: stefanzweifel/git-auto-commit-action@v4.1.4
       with:
-        files: ./shards.cfg
-        tag_name: latest-1
-      env:
-        DRAFT_RELEASE: "true"
-        PRE_RELEASE: "true"
-        ALLOW_EMPTY_CHANGELOG: "true"
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        commit_message: Update shards.cfg
+        branch: release
+        file_pattern: ./shards.cfg
+        repository: .
+        commit_user_name: Publish Bot
+        commit_user_email: fungos@gmail.com
+        commit_author: Danny Angelo Carminati Grein <fungos@gmail.com>
