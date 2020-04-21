@@ -3,6 +3,8 @@ on: [push]
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      ACTIONS_RUNNER_DEBUG: true
     steps:
     - uses: actions/checkout@v2
     - name: Check shards
@@ -12,21 +14,20 @@ jobs:
         sudo apt-get install -y ninja-build xorg-dev libglu1-mesa-dev libalut-dev mesa-common-dev libasound-dev --fix-missing
         pwd
         ls -la
-        git clone https://github.com/crossuo/crossuo --depth 1
-        cmake -B build -S crossuo
+        git clone https://github.com/crossuo/crossuo ../crossuo --depth 1
+        cmake -B build -S ../crossuo
         cmake --build build --target shardchk
         ./build/tools/xuoi/shardchk --path shards
-        git tag -f latest
-        git push origin --tags -f
-        git checkout latest
-        ls -la
-    - name: Release
-      uses: softprops/action-gh-release@v1
+        git fetch
+        git checkout release
+        git config advice.addIgnoredFile true
+    - uses: stefanzweifel/git-auto-commit-action@v4.1.5
       with:
-        files: ./shards.cfg
-        tag_name: latest-1
-      env:
-        DRAFT_RELEASE: "true"
-        PRE_RELEASE: "true"
-        ALLOW_EMPTY_CHANGELOG: "true"
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        branch: release
+        file_pattern: ./shards.cfg
+        repository: .
+        commit_user_name: Publish Bot
+        commit_user_email: fungos@gmail.com
+        commit_author: Danny Angelo Carminati Grein <fungos@gmail.com>
+        commit_message: 'Publish shards'
+        commit_options: '--no-verify --signoff --verbose'
