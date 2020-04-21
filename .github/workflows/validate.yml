@@ -23,10 +23,10 @@ jobs:
         ./build/tools/xuoi/shardchk --path shards
     - uses: stefanzweifel/git-auto-commit-action@v4.1.4
       with:
-        commit_message: Update shards.cfg
-        branch: release
-        file_pattern: ./shards.cfg
-        repository: .
-        commit_user_name: Publish Bot
-        commit_user_email: fungos@gmail.com
-        commit_author: Danny Angelo Carminati Grein <fungos@gmail.com>
+        files: ./shards.cfg
+        tag_name: latest-1
+      env:
+        DRAFT_RELEASE: "true"
+        PRE_RELEASE: "true"
+        ALLOW_EMPTY_CHANGELOG: "true"
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
