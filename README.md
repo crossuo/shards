@@ -1,6 +1,6 @@
 # X:UO Launcher Shard List
 
-[![Travis Build Status](https://travis-ci.org/crossuo/shards.svg?branch=master)](https://travis-ci.org/crossuo/shards)
+[![CI](https://github.com/crossuo/shards/actions/workflows/validate.yml/badge.svg)](https://github.com/crossuo/shards/actions/workflows/validate.yml)
 
 ## Adding a new shard
 

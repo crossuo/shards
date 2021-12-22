@@ -18,6 +18,8 @@ jobs:
         cmake -B build -S ../crossuo
         cmake --build build --target shardchk
         ./build/tools/xuoi/shardchk --path shards
+    - name: Publish shards
+      run: |
         mv shards.cfg ~
         git fetch
         git checkout release
