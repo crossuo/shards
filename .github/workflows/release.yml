@@ -1,5 +1,5 @@
 name: CI
-on: [pull_request]
+on: [push]
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -18,3 +18,20 @@ jobs:
         cmake -B build -S ../crossuo
         cmake --build build --target shardchk
         ./build/tools/xuoi/shardchk --path shards
+    - name: Publish shards
+      run: |
+        mv shards.cfg ~
+        git fetch
+        git checkout release
+        git config advice.addIgnoredFile true
+        mv ~/shards.cfg .
+    - uses: stefanzweifel/git-auto-commit-action@v4.1.5
+      with:
+        branch: release
+        file_pattern: ./shards.cfg
+        repository: .
+        commit_user_name: Publish Bot
+        commit_user_email: fungos@gmail.com
+        commit_author: Danny Angelo Carminati Grein <fungos@gmail.com>
+        commit_message: 'Publish shards'
+        commit_options: '--no-verify --signoff --verbose'
