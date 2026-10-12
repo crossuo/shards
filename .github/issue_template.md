@@ -1,5 +1,5 @@
 #
-# Fill this templateand submit an issue or a pull request to add a shard to
+# Fill this template and submit an issue or a pull request to add a shard to
 # the shard list.
 #
 # Lines starting with '#' are comments and will be ignored. For information
@@ -11,20 +11,20 @@
 # rejected.
 #
 # Fields are pre-filled with <...> remove these as they are just examples:
-# Name=<my shard name> -> Name=My Real Shard Name
+# ShardName=<my shard name> -> ShardName=My Real Shard Name
 #
 [Shard]
-Name=<my shard name>
+ShardName=<my shard name>
 LoginServer=<ip>,<port>
 ClientVersion=<7.0.45.0>
 ClientType=<T2A|RE|TD|LBR|AoS|SE|SA>
-ServerType=<RunUO|ServUO|POL|Sphere>
-#Url=<http://shard.website.com>
-#UrlForum=
-#UrlOther=Discord+https://discord.gg/<invite id>
-#UrlRegister=
-#Description=
-#Installer=
+Description=<long description>
+ShardWeb=<http://shard.website.com>
+ProductUrl=<cdn data url>
+#ShardCommunity=
+#ShardOther=
+#ShardAccount=
+#ShardVideo=
 #Language=English
-#Crypto=No
-#Tags=
+#Crypt=No
+#Tags=pvm,pvp,<anything>
